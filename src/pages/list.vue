@@ -58,6 +58,8 @@ export default {
     },
     goBasket() {
       if (this.$store.state.emailCl === "") {
+        //let url = new URL('login.html');
+        //url.searchParams.set('redirectURL', 'order.html');
         this.$router.push("/log");
         //window.open(url, "_self")
       } else {
