@@ -33,6 +33,7 @@
         <td>sum : {{ getSum.sum }}</td>
         <td></td>
         <td></td>
+        <td></td>
         <td>{{ getSum.total }}</td>
       </tr>
     </table>
