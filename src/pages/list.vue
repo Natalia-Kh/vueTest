@@ -11,7 +11,7 @@
         </button>
         <button
           v-if="prod.prodState === 'del'"
-          v-on:click="addone($event, index)"
+          v-on:click="addOne($event, index)"
         >
           Добавить 1
         </button>
@@ -47,9 +47,9 @@ export default {
       this.$store.commit("addNew", { prod, nextId: this.nextId++ });
       prod.prodState = "del";
     },
-    addone(event, index) {
+    addOne(event, index) {
       let prod = this.prodList[index];
-      this.$store.commit("addone", { prod });
+      this.$store.commit("addOne", { prod });
     },
     delProd(event, index) {
       let prod = this.prodList[index];
@@ -57,7 +57,7 @@ export default {
       prod.prodState = "push";
     },
     goBasket() {
-      if (this.$store.state.emailCl === "") {
+      if (this.$store.state.email === "") {
         //let url = new URL('login.html');
         //url.searchParams.set('redirectURL', 'order.html');
         this.$router.push("/log");

@@ -1,8 +1,8 @@
 <template>
   <div>
-    <input type="text" v-model="emailCl" placeholder="Email" />
-    <input type="text" v-model="passCl" placeholder="Пароль" />
-    <button @click="onlk">Войти</button>
+    <input type="text" v-model="userEmail" placeholder="Email" />
+    <input type="text" v-model="password" placeholder="Пароль" />
+    <button @click="login">Войти</button>
   </div>
 </template>
 
@@ -10,31 +10,31 @@
 export default {
   data() {
     return {
-      passCl: "",
-      emailCl: "",
+      password: "",
+      email: "",
     };
   },
   methods: {
-    onlk() {
+    login() {
       if (!this.validate_inp()) {
         return false;
       }
       let arrUs = [
-        { emailCL: "1@q", pass: "1" },
-        { emailCL: "2@q", pass: "2" },
-        { emailCL: "3@q", pass: "3" },
+        { email: "1@q", password: "1" },
+        { email: "2@q", password: "2" },
+        { email: "3@q", password: "3" },
       ];
-      let userCL = arrUs.find((el) => el.emailCL == this.emailCl);
-      if (userCL == undefined) {
+      let user = arrUs.find((el) => el.email == this.userEmail);
+      if (user == undefined) {
         console.log("Пользователь ненайден");
         return false;
       }
-      if (userCL.pass != this.passCl) {
+      if (user.password != this.password) {
         console.log("Пароль неверный");
         return false;
       }
 
-      this.$store.commit("addEmail", { emailCl: this.emailCl });
+      this.$store.commit("addEmail", { userEmail: this.userEmail });
 
       if (this.$store.state.orders.length == 0) {
         this.$router.push("/");
@@ -42,14 +42,14 @@ export default {
         this.$router.push("/index");
       }
     },
-    validate_inp() {
+    validate_user() {
       let valid = true;
-      if (this.emailCL == "") {
+      if (this.userEmail == "") {
         window.location.search.split("redirectURL=")[1];
         console.log("Пожалуйста заполние Email");
         valid = false;
       }
-      if (this.passCl == "") {
+      if (this.password == "") {
         console.log("Пожалуйста заполние пароль");
         valid = false;
       }

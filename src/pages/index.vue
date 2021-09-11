@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <input type="text" v-model="fioCl" placeholder="ФИО" />
-    <input type="text" v-model="telCl" placeholder="Номер телефона" />
-    <input type="text" v-model="adrCl" placeholder="Адрес" />
+    <input type="text" v-model="fullName" placeholder="ФИО" />
+    <input type="text" v-model="phoneNumber" placeholder="Номер телефона" />
+    <input type="text" v-model="address" placeholder="Адрес" />
     <table>
       <tr>
         <td>#</td>
@@ -49,9 +49,9 @@ export default {
     return {
       orders: this.$store.state.orders,
       total: 0,
-      fioCl: "",
-      telCl: "",
-      adrCl: "",
+      fullName: "",
+      phoneNumber: "",
+      address: "",
     };
   },
   beforeMount() {
@@ -67,9 +67,9 @@ export default {
         return false;
       }
       let objCl = {
-        fioCl: this.fioCl,
-        telCl: this.telCl,
-        adrCl: this.adrCl,
+        fullName: this.fullName,
+        phoneNumber: this.phoneNumber,
+        address: this.address,
         ordCl: this.orders,
       };
       fetch("/", {
@@ -84,21 +84,21 @@ export default {
     },
     validate_inp() {
       let valid = true;
-      if (this.fioCl == "") {
+      if (this.fullName == "") {
         alert("Пожалуйста заполните ФИО");
         valid = false;
       }
-      let numtel = this.telCl;
-      if (numtel == "") {
+      let num = this.phoneNumber;
+      if (num == "") {
         console.log("Пожалуйста заполните номер телефона");
         valid = false;
       }
       let regex = /^[\]?[(]?[0-9]{3}[)]?[-\s]?[0-9]{3}[-\s]?[0-9]{4,6}$/im;
-      if (!numtel.match(regex)) {
+      if (!num.match(regex)) {
         console.log("Пожалуйста заполните номер телефона");
         valid = false;
       }
-      if (this.adrCl == "") {
+      if (this.address == "") {
         console.log("Пожалуйста заполните адресс");
         valid = false;
       }
@@ -108,12 +108,14 @@ export default {
   computed: {
     getSum() {
       return this.$store.state.orders.reduce(
-        (infOrd, orders) => {
-          infOrd.min = infOrd.min > orders.sum ? orders.sum : infOrd.min;
-          infOrd.max = infOrd.max < orders.sum ? orders.sum : infOrd.max;
-          infOrd.sum = +orders.sum + infOrd.sum;
-          infOrd.total = +orders.total + infOrd.total;
-          return infOrd;
+        (userOrder, orders) => {
+          userOrder.min =
+            userOrder.min > orders.sum ? orders.sum : userOrder.min;
+          userOrder.max =
+            userOrder.max < orders.sum ? orders.sum : userOrder.max;
+          userOrder.sum = +orders.sum + userOrder.sum;
+          userOrder.total = +orders.total + userOrder.total;
+          return userOrder;
         },
         {
           min:
