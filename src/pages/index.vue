@@ -38,6 +38,10 @@
       </tr>
     </table>
     <button id="sendOrder" @click="sendOrder">Отправить заказ</button>
+    <button id="getHistory" @click="getHistory">
+      Показать историю заказов
+    </button>
+    <button id="logout" @click="logout">Выйти</button>
   </div>
 </template>
 
@@ -62,22 +66,31 @@ export default {
       let currentCount = event.target.value;
       this.$store.commit("inpCount", { currentCount, index });
     },
+    logout() {
+      this.$store.commit("addEmail", { userEmail: "" });
+      this.$router.push("/log");
+    },
+    getHistory() {
+      this.$router.push("/history");
+    },
     sendOrder() {
       if (!this.validate_inp()) {
         return false;
       }
-      let objCl = {
+      let userOrder = {
         fullName: this.fullName,
         phoneNumber: this.phoneNumber,
         address: this.address,
-        ordCl: this.orders,
+        id: this.$store.state.userEmail,
+        orders: this.orders,
       };
-      fetch("/", {
+
+      fetch("http://localhost:3000/userOrder", {
         method: "POST",
         headers: {
           "Content-Type": "application/json;charset=utf-8",
         },
-        body: JSON.stringify(objCl),
+        body: JSON.stringify(userOrder),
       })
         .then((Response) => Response.JSON())
         .then((result) => console.log(JSON.stringify(result, null, 2)));

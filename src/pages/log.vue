@@ -11,12 +11,12 @@ export default {
   data() {
     return {
       password: "",
-      email: "",
+      userEmail: "",
     };
   },
   methods: {
     login() {
-      if (!this.validate_inp()) {
+      if (!this.validate_user()) {
         return false;
       }
       let arrUs = [
