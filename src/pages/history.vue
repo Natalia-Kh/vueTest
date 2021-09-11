@@ -1,6 +1,7 @@
 <template>
   <div>
-    <table>
+    <p>{{ userOrders }}</p>
+    <!-- <table>
       <tr>
         <td>#</td>
         <td>Order Numder</td>
@@ -17,7 +18,7 @@
         <td>{{ item.count }}</td>
         <td>{{ item.total }}</td>
       </tr>
-    </table>
+    </table> -->
   </div>
 </template>
 
@@ -33,7 +34,7 @@ export default {
             "Content-Type": "application/json;charset=utf-8",
           },
         }
-      ),
+      ).then((response) => response.JSON()),
     };
   },
   methods: {
