@@ -6,7 +6,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
         orders: [],
-        emailCl: "",
+        emailCluserEmail: "",
 
     },
     mutations: {
@@ -25,15 +25,15 @@ const store = new Vuex.Store({
             );
             state.orders.splice(ord, 1);
         },
-        addone(state, { prod }) {
+        addOne(state, { prod }) {
             let ord = state.orders.find(
                 (order) => order.productName === prod.productName
             );
             ord.count += 1;
             ord.total = prod.sum * ord.count;
         },
-        addEmail(state, { emailCl }) {
-            state.emailCl = emailCl
+        addEmail(state, { userEmail }) {
+            state.userEmail = userEmail
         },
         inpCount(state, { currentCount, index }) {
             let order = state.orders[index];
