@@ -1,7 +1,7 @@
 <template>
   <div>
-    <p>{{ userOrders }}</p>
-    <!-- <table>
+    <p>{{ userOrders.fullName }}</p>
+    <table v-for="(item, index) in userOrders" :key="index">
       <tr>
         <td>#</td>
         <td>Order Numder</td>
@@ -10,15 +10,15 @@
         <td>Count</td>
         <td>Summ Ord</td>
       </tr>
-      <tr v-for="(item, index) in userOrders" :key="index">
-        <td>{{ index }}</td>
-        <td>{{ item.orderNumder }}</td>
-        <td>{{ item.productName }}</td>
-        <td>{{ item.sum }}</td>
-        <td>{{ item.count }}</td>
-        <td>{{ item.total }}</td>
+      <tr v-for="(itemt, indext) in userOrders[index].orders" :key="indext">
+        <td>{{ indext }}</td>
+        <td>{{ itemt.orderNumder }}</td>
+        <td>{{ itemt.productName }}</td>
+        <td>{{ itemt.sum }}</td>
+        <td>{{ itemt.count }}</td>
+        <td>{{ itemt.total }}</td>
       </tr>
-    </table> -->
+    </table>
   </div>
 </template>
 
@@ -26,32 +26,23 @@
 export default {
   data() {
     return {
-      userOrders: fetch(
-        "http://localhost:3000/userOrder?id=1@q" + this.$store.state.userEmail,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json;charset=utf-8",
-          },
-        }
-      ).then((response) => response.JSON()),
+      userOrders: [],
     };
   },
-  methods: {
-    /* getHisory(event, index) {
-      fetch(
-        "http://localhost:3000/userOrder/userOrder?id=" +
-          this.$store.state.userEmail,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json;charset=utf-8",
-          },
-        }
-      )
-        .then((Response) => Response.JSON())
-        .then((result) => console.log(JSON.stringify(result, null, 2)));
-    },*/
+  mounted() {
+    let strurl =
+      "http://localhost:3000/userOrder?" + this.$store.state.userEmail;
+    fetch(strurl, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+    })
+      .then((response) => response.json())
+      .then(function (data) {
+        console.log("data", data);
+        this.userOrders = data;
+      });
   },
 };
 </script>
