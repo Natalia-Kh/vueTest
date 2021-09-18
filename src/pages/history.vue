@@ -3,7 +3,6 @@
     <p>{{ userOrders.fullName }}</p>
     <table v-for="(item, index) in userOrders" :key="index">
       <tr>
-        <td>#</td>
         <td>Order Numder</td>
         <td>Product Name</td>
         <td>Sum</td>
@@ -11,7 +10,6 @@
         <td>Summ Ord</td>
       </tr>
       <tr v-for="(itemt, indext) in userOrders[index].orders" :key="indext">
-        <td>{{ indext }}</td>
         <td>{{ itemt.orderNumder }}</td>
         <td>{{ itemt.productName }}</td>
         <td>{{ itemt.sum }}</td>
@@ -39,10 +37,12 @@ export default {
       },
     })
       .then((response) => response.json())
-      .then(function (data) {
+      .then((result) => (this.userOrders = result)); /// // сработает
+
+    /*  .then(function (data) {
         console.log("data", data);
         this.userOrders = data;
-      });
+      }); */
   },
 };
 </script>
