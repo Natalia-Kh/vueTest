@@ -29,7 +29,7 @@ export default {
   },
   mounted() {
     let strurl =
-      "http://localhost:3000/userOrder?" + this.$store.state.userEmail;
+      "http://localhost:3000/userOrder/?id=" + this.$store.state.userEmail;
     fetch(strurl, {
       method: "GET",
       headers: {
@@ -37,12 +37,7 @@ export default {
       },
     })
       .then((response) => response.json())
-      .then((result) => (this.userOrders = result)); /// // сработает
-
-    /*  .then(function (data) {
-        console.log("data", data);
-        this.userOrders = data;
-      }); */
+      .then((result) => (this.userOrders = result));
   },
 };
 </script>

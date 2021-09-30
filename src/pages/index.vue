@@ -65,8 +65,27 @@ export default {
     inpCount(event, index) {
       let currentCount = event.target.value;
       this.$store.commit("inpCount", { currentCount, index });
+      let userOrder = {
+        id: this.$store.state.userEmail,
+        orders: this.$store.state.orders,
+      };
+      let strurl =
+        "http://localhost:3000/userLog/" + this.$store.state.userEmail;
+      fetch(strurl, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify(userOrder),
+      })
+        .then((response) => response.json())
+        .then((result) => console.log(JSON.stringify(result, null, 2)));
     },
     logout() {
+      fetch("http://localhost:3000/userLog/" + this.$store.state.userEmail, {
+        method: "DELETE",
+      });
+
       this.$store.commit("addEmail", { userEmail: "" });
       this.$router.push("/log");
     },

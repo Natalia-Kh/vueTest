@@ -35,6 +35,18 @@ export default {
       }
 
       this.$store.commit("addEmail", { userEmail: this.userEmail });
+      let userLog = {
+        id: this.$store.state.userEmail,
+      };
+      fetch("http://localhost:3000/userLog", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify(userLog),
+      })
+        .then((Response) => Response.JSON())
+        .then((result) => console.log(JSON.stringify(result, null, 2)));
 
       if (this.$store.state.orders.length == 0) {
         this.$router.push("/");
@@ -44,7 +56,7 @@ export default {
     },
     validate_user() {
       let valid = true;
-      if (this.userEmail == "") {
+      if (typeof this.userEmail === "undefined") {
         window.location.search.split("redirectURL=")[1];
         console.log("Пожалуйста заполние Email");
         valid = false;

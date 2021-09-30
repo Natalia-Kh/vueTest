@@ -39,6 +39,7 @@ export default {
         { productName: "tom", sum: 2000, prodState: "push" },
       ],
       nextId: 1,
+      userOrders: [],
     };
   },
   methods: {
@@ -46,18 +47,21 @@ export default {
       let prod = this.prodList[index];
       this.$store.commit("addNew", { prod, nextId: this.nextId++ });
       prod.prodState = "del";
+      this.writedb("PUT");
     },
     addOne(event, index) {
       let prod = this.prodList[index];
       this.$store.commit("addOne", { prod });
+      this.writedb("PATCH");
     },
     delProd(event, index) {
       let prod = this.prodList[index];
       this.$store.commit("delProd", { prod });
       prod.prodState = "push";
+      this.writedb("PATCH");
     },
     goBasket() {
-      if (this.$store.state.email === "") {
+      if (this.$store.state.userEmail === "") {
         //let url = new URL('login.html');
         //url.searchParams.set('redirectURL', 'order.html');
         this.$router.push("/log");
@@ -65,6 +69,23 @@ export default {
       } else {
         this.$router.push("/index");
       }
+    },
+    writedb(meth) {
+      let userOrder = {
+        id: this.$store.state.userEmail,
+        orders: this.$store.state.orders,
+      };
+      let strurl =
+        "http://localhost:3000/userLog/" + this.$store.state.userEmail;
+      fetch(strurl, {
+        method: meth,
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify(userOrder),
+      })
+        .then((response) => response.json())
+        .then((result) => console.log(JSON.stringify(result, null, 2)));
     },
   },
 };
